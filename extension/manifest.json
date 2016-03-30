@@ -1,0 +1,19 @@
+﻿{
+    "manifest_version": 2,
+    "name": "seimani-util",
+    "description": "開発中であるんである。",
+    "version": "1.0",
+    "icons": {
+        "128": "images/icons/icon_128.png"
+    },
+    "browser_action": {
+        "default_icon": {
+            "38": "images/icons/icon_38.png"
+        },
+        "default_title": "スクショを撮る",
+        "default_popup": "popup.html"
+    },
+    "permissions": [
+        "tabs"
+    ]
+}
