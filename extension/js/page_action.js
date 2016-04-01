@@ -16,9 +16,4 @@
 
 //console.error("TestError");
 //alert(elem);
-
-chrome.tabs.query({ active: true, lastFocusedWindow: true }, function (tabs) {
-    var tab = tabs[0];
-    console.log(tab);
-    chrome.tabs.executeScript(tab.tabId, { file: "js/page_action.js" });
-});
+alert("in page_action.js");
