@@ -6,8 +6,6 @@
         node.setAttribute("src", dataURL);
         node.setAttribute("width", "300px");
         //node.setAttribute("height", "60px");
-        console.log(node);
-        console.log("Set preview.");
     }
 })
 

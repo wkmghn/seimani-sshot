@@ -1,8 +1,8 @@
 ﻿{
     "manifest_version": 2,
     "name": "seimani-util",
-    "description": "開発中であるんである。",
-    "version": "1.0",
+    "description": "政剣マニフェスティアのスクリーンショットを簡単に撮影できます。",
+    "version": "0.1",
     "icons": {
         "128": "images/icons/icon_128.png"
     },
@@ -10,7 +10,7 @@
         "default_icon": {
             "38": "images/icons/icon_38.png"
         },
-        "default_title": "スクショを撮る",
+        "default_title": "スクリーンショットを撮影する",
         "default_popup": "popup.html"
     },
     "background": {
@@ -20,9 +20,8 @@
     "permissions": [
         "tabs",
         "downloads",
-        "downloads.open",
         "declarativeContent",
-        "<all_urls>",
+        "http://d3vhzwqidpn2dk.cloudfront.net/seimani/*",
         "http://www.dmm.com/netgame/social/-/gadgets/=/app_id=763917/"
     ]
 }
