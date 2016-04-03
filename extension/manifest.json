@@ -20,6 +20,7 @@
     "permissions": [
         "tabs",
         "downloads",
+        "downloads.open",
         "declarativeContent",
         "<all_urls>",
         "http://www.dmm.com/netgame/social/-/gadgets/=/app_id=763917/"

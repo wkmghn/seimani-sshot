@@ -1,5 +1,5 @@
-﻿chrome.runtime.onInstalled.addListener(function () {
-    console.log("add listener.")
+﻿// PageAction アイコンの表示/非表示切り替え
+chrome.runtime.onInstalled.addListener(function () {
     chrome.declarativeContent.onPageChanged.removeRules(undefined, function () {
         chrome.declarativeContent.onPageChanged.addRules([{
             conditions: [
@@ -12,11 +12,34 @@
     });
 });
 
-
 /*
- * キャプチャしたスクリーンショットの保存関係
+ * キャプチャしたスクリーンショットのダウンロード(保存)関係
  */
 
+// ダウンロードの監視
+var progressingDownloadIds = []
+chrome.downloads.onChanged.addListener(function (downloadDelta) {
+    var downloadId = downloadDelta.id;
+    var indexInArray = progressingDownloadIds.indexOf(downloadId);
+
+    // 管理対象のダウンロードではない？
+    if (indexInArray < 0) {
+        return;
+    }
+
+    // まだダウンロードが終わってない？
+    if (downloadDelta.state && downloadDelta.state.current != "complete") {
+        return;
+    }
+
+    progressingDownloadIds.splice(indexInArray, 1);
+    //console.log("saved. (ID = " + downloadId + ")");
+    // ダウンロードが完了したのでエクスプローラで開く
+    chrome.downloads.show(downloadId);
+});
+
+// スクリーンショットのファイル名を作成する。
+// ダウンロードディレクトリからの相対パスを返す。
 function makeFilename() {
     function padZero(s, n) {
         var zeros = "";
@@ -32,12 +55,15 @@ function makeFilename() {
     return s;
 }
 
+// キャプチャ処理から送られてきたスクリーンショットイメージを受け取る
 chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
-    // 送られてきたイメージを保存
+    // 送られてきたイメージをダウンロード
     if (message.imageDataURL) {
         var dataURL = message.imageDataURL;
         var filename = makeFilename();
-        console.log(filename);
-        chrome.downloads.download({ url: dataURL, filename: filename });
+        console.log("save to \"" + filename + "\".");
+        chrome.downloads.download({ url: dataURL, filename: filename }, function (downloadId) {
+            progressingDownloadIds.push(downloadId);
+        });
     }
 })
