@@ -1,4 +1,23 @@
-﻿function makeFilename() {
+﻿chrome.runtime.onInstalled.addListener(function () {
+    console.log("add listener.")
+    chrome.declarativeContent.onPageChanged.removeRules(undefined, function () {
+        chrome.declarativeContent.onPageChanged.addRules([{
+            conditions: [
+                new chrome.declarativeContent.PageStateMatcher({
+                    pageUrl: { urlContains: "http://www.dmm.com/netgame/social/-/gadgets/=/app_id=763917/" }
+                })
+            ],
+            actions: [new chrome.declarativeContent.ShowPageAction()]
+        }]);
+    });
+});
+
+
+/*
+ * キャプチャしたスクリーンショットの保存関係
+ */
+
+function makeFilename() {
     function padZero(s, n) {
         var zeros = "";
         for (var i = 0; i < n; ++i) {

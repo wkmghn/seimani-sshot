@@ -6,7 +6,7 @@
     "icons": {
         "128": "images/icons/icon_128.png"
     },
-    "browser_action": {
+    "page_action": {
         "default_icon": {
             "38": "images/icons/icon_38.png"
         },
@@ -20,6 +20,7 @@
     "permissions": [
         "tabs",
         "downloads",
+        "declarativeContent",
         "<all_urls>",
         "http://www.dmm.com/netgame/social/-/gadgets/=/app_id=763917/"
     ]
