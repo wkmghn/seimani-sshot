@@ -13,8 +13,14 @@
         "default_title": "スクショを撮る",
         "default_popup": "popup.html"
     },
+    "background": {
+        "scripts": [ "js/background.js" ],
+        "persistant": false
+    },
     "permissions": [
         "tabs",
-        "https://www.google.com/*"
+        "downloads",
+        "<all_urls>",
+        "http://www.dmm.com/netgame/social/-/gadgets/=/app_id=763917/"
     ]
 }
