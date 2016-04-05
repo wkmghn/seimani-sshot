@@ -1,8 +1,8 @@
 ﻿{
     "manifest_version": 2,
-    "name": "seimani-util",
+    "name": "seimani-sshot",
     "description": "政剣マニフェスティアのスクリーンショットを簡単に撮影できます。",
-    "version": "0.1",
+    "version": "1.0",
     "icons": {
         "128": "images/icons/icon_128.png"
     },

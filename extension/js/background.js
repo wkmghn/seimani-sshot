@@ -49,7 +49,7 @@ function makeFilename() {
         return (zeros + s).substr(-n);
     }
     var now = new Date();
-    var s = "seimani-util/"
+    var s = "seimani-sshot/"
     s += padZero(now.getFullYear(), 4) + "-" + padZero(now.getMonth() + 1, 2) + "-" + padZero(now.getDate(), 2) + "-" + padZero(now.getHours(), 2) + padZero(now.getMinutes(), 2) + padZero(now.getSeconds(), 2);
     s += ".png";
     return s;
