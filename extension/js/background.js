@@ -1,5 +1,5 @@
-﻿// PageAction アイコンの表示/非表示切り替え
-chrome.runtime.onInstalled.addListener(function () {
+﻿chrome.runtime.onInstalled.addListener(function () {
+    // PageAction アイコンの表示/非表示切り替え
     chrome.declarativeContent.onPageChanged.removeRules(undefined, function () {
         chrome.declarativeContent.onPageChanged.addRules([{
             conditions: [
@@ -9,6 +9,15 @@ chrome.runtime.onInstalled.addListener(function () {
             ],
             actions: [new chrome.declarativeContent.ShowPageAction()]
         }]);
+    });
+
+    // クリック時の動作
+    chrome.pageAction.onClicked.addListener(function (tab) {
+        // キャプチャを実行
+        chrome.tabs.query({ active: true, lastFocusedWindow: true }, function (tabs) {
+            var tab = tabs[0];
+            chrome.tabs.executeScript(tab.tabId, { file: "js/capture.js", allFrames: true });
+        });
     });
 });
 

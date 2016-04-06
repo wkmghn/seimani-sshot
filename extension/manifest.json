@@ -10,8 +10,7 @@
         "default_icon": {
             "38": "images/icons/icon_38.png"
         },
-        "default_title": "スクリーンショットを撮影する",
-        "default_popup": "popup.html"
+        "default_title": "スクリーンショットを撮影する"
     },
     "background": {
         "scripts": [ "js/background.js" ],
