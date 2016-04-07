@@ -36,15 +36,19 @@ chrome.downloads.onChanged.addListener(function (downloadDelta) {
         return;
     }
 
-    // まだダウンロードが終わってない？
-    if (downloadDelta.state && downloadDelta.state.current != "complete") {
-        return;
-    }
+    // ダウンロードが終わった？
+    if (downloadDelta.state && downloadDelta.state.current == "complete") {
+        progressingDownloadIds.splice(indexInArray, 1);
 
-    progressingDownloadIds.splice(indexInArray, 1);
-    //console.log("saved. (ID = " + downloadId + ")");
-    // ダウンロードが完了したのでエクスプローラで開く
-    chrome.downloads.show(downloadId);
+        // エクスプローラで開く(設定で有効になっている場合のみ)
+        chrome.storage.local.get({
+            openAfterSave: true
+        }, function (options) {
+            if (options.openAfterSave) {
+                chrome.downloads.show(downloadId);
+            }
+        });
+    }
 });
 
 // スクリーンショットのファイル名を作成する。

@@ -3,6 +3,7 @@
     "name": "seimani-sshot",
     "description": "政剣マニフェスティアのスクリーンショットを簡単に撮影できます。",
     "version": "1.0",
+    "options_page": "html/options.html",
     "icons": {
         "128": "images/icons/icon_128.png"
     },
@@ -20,6 +21,7 @@
         "tabs",
         "downloads",
         "declarativeContent",
+        "storage",
         "http://www.dmm.com/netgame/social/-/gadgets/=/app_id=763917/",
         "http://d3vhzwqidpn2dk.cloudfront.net/seimani/*"
     ]
