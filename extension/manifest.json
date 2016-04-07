@@ -21,6 +21,13 @@
         "scripts": [ "js/background.js" ],
         "persistant": false
     },
+    "commands": {
+        "_execute_page_action": {
+            "suggested_key": {
+                "default": "Ctrl+Shift+S"
+            }
+        }
+    },
     "permissions": [
         "tabs",
         "downloads",
