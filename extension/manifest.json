@@ -3,10 +3,14 @@
     "name": "seimani-sshot",
     "description": "政剣マニフェスティアのスクリーンショットを簡単に撮影できます。",
     "version": "1.0",
-    "options_page": "html/options.html",
     "icons": {
         "128": "images/icons/icon_128.png"
     },
+    "options_ui": {
+        "page": "options.html",
+        "chrome_style": true
+    },
+    "options_page": "options.html",
     "page_action": {
         "default_icon": {
             "38": "images/icons/icon_38.png"
