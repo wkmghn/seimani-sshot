@@ -1,39 +1,54 @@
 ﻿{
-    "manifest_version": 2,
-    "name": "seimani-sshot",
-    "description": "政剣マニフェスティアのスクリーンショットを簡単に撮影できます。",
-    "version": "1.3",
-    "icons": {
-        "128": "images/icons/icon_128.png"
-    },
-    "options_ui": {
-        "page": "options.html",
-        "chrome_style": true
-    },
-    "options_page": "options.html",
-    "page_action": {
-        "default_icon": {
-            "38": "images/icons/icon_38.png"
-        },
-        "default_title": "スクリーンショットを撮影する"
-    },
-    "background": {
-        "scripts": [ "js/background.js" ],
-        "persistant": true
-    },
-    "commands": {
-        "_execute_page_action": {
-            "suggested_key": {
-                "default": "Ctrl+Shift+S"
-            }
-        }
-    },
-    "permissions": [
-        "tabs",
-        "downloads",
-        "declarativeContent",
-        "storage",
+  "manifest_version": 2,
+  "name": "seimani-sshot",
+  "description": "政剣マニフェスティアのスクリーンショットを簡単に撮影できます。",
+  "version": "1.4",
+  "icons": {
+      "128": "images/icons/icon_128.png"
+  },
+  "options_ui": {
+      "page": "options.html",
+      "chrome_style": true
+  },
+  "options_page": "options.html",
+  "page_action": {
+      "default_icon": {
+          "38": "images/icons/icon_38.png"
+      },
+      "default_title": "スクリーンショットを撮影する"
+  },
+  "background": {
+      "scripts": [ "js/background.js" ],
+      "persistant": true
+  },
+  "content_scripts": [
+    {
+      "matches": [
         "http://www.dmm.com/netgame/social/-/gadgets/=/app_id=763917/",
         "http://d3vhzwqidpn2dk.cloudfront.net/seimani/*"
-    ]
+      ],
+      "js": [
+        "js/modify_cursor.js"
+      ],
+      "all_frames": true
+    }
+  ],
+  "commands": {
+      "_execute_page_action": {
+          "suggested_key": {
+              "default": "Ctrl+Shift+S"
+          }
+      }
+  },
+  "permissions": [
+      "tabs",
+      "downloads",
+      "declarativeContent",
+      "storage",
+      "http://www.dmm.com/netgame/social/-/gadgets/=/app_id=763917/",
+      "http://d3vhzwqidpn2dk.cloudfront.net/seimani/*"
+  ],
+  "web_accessible_resources": [
+    "images/cursors/cursor.png"
+  ]
 }

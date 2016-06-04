@@ -17,10 +17,8 @@ chrome.runtime.onInstalled.addListener(function () {
 window.onload = function () {
     // クリック時の動作
     chrome.pageAction.onClicked.addListener(function (tab) {
-        console.log("PageAction on clicked.");
         // キャプチャを実行
         chrome.tabs.query({ active: true, lastFocusedWindow: true }, function (tabs) {
-            console.log("Do executeScropt.");
             var tab = tabs[0];
             chrome.tabs.executeScript(tab.tabId, { file: "js/capture.js", allFrames: true });
         });
@@ -86,5 +84,3 @@ chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
         });
     }
 })
-
-console.log("Finish background initialization.")
