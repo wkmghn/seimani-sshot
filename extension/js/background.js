@@ -1,4 +1,6 @@
-﻿chrome.runtime.onInstalled.addListener(function () {
+﻿console.log("Begin background initialization.")
+
+chrome.runtime.onInstalled.addListener(function () {
     // PageAction アイコンの表示/非表示切り替え
     chrome.declarativeContent.onPageChanged.removeRules(undefined, function () {
         chrome.declarativeContent.onPageChanged.addRules([{
@@ -10,16 +12,20 @@
             actions: [new chrome.declarativeContent.ShowPageAction()]
         }]);
     });
+});
 
+window.onload = function () {
     // クリック時の動作
     chrome.pageAction.onClicked.addListener(function (tab) {
+        console.log("PageAction on clicked.");
         // キャプチャを実行
         chrome.tabs.query({ active: true, lastFocusedWindow: true }, function (tabs) {
+            console.log("Do executeScropt.");
             var tab = tabs[0];
             chrome.tabs.executeScript(tab.tabId, { file: "js/capture.js", allFrames: true });
         });
     });
-});
+};
 
 /*
  * キャプチャしたスクリーンショットのダウンロード(保存)関係
@@ -80,3 +86,5 @@ chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
         });
     }
 })
+
+console.log("Finish background initialization.")
