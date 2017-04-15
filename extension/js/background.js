@@ -6,7 +6,7 @@ chrome.runtime.onInstalled.addListener(function () {
         chrome.declarativeContent.onPageChanged.addRules([{
             conditions: [
                 new chrome.declarativeContent.PageStateMatcher({
-                    pageUrl: { urlContains: "http://www.dmm.com/netgame/social/-/gadgets/=/app_id=763917/" }
+                    pageUrl: { urlContains: "http://pc-play.games.dmm.com/play/seiken/" }
                 })
             ],
             actions: [new chrome.declarativeContent.ShowPageAction()]
