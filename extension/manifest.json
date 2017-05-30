@@ -26,6 +26,7 @@
       "matches": [
         "http://pc-play.games.dmm.com/play/*",
         "http://pc-play.games.dmm.com/play/seimani/*",
+        "http://pc-play.games.dmm.com/play/seiken/*",
         "http://d3vhzwqidpn2dk.cloudfront.net/seimani/*",
         "http://osapi.dmm.com/gadgets/"
       ],
@@ -44,13 +45,13 @@
   },
   "permissions": [
     "activeTab",
-    "tabCapture",
     "tabs",
     "downloads",
     "declarativeContent",
     "storage",
     "http://pc-play.games.dmm.com/play/*",
     "http://pc-play.games.dmm.com/play/seimani/*",
+    "http://pc-play.games.dmm.com/play/seiken/*",
     "http://d3vhzwqidpn2dk.cloudfront.net/seimani/*",
     "http://osapi.dmm.com/gadgets/"
   ],
