@@ -1,6 +1,4 @@
-﻿console.log("Begin background initialization.")
-
-chrome.runtime.onInstalled.addListener(function () {
+﻿chrome.runtime.onInstalled.addListener(function () {
     // PageAction アイコンの表示/非表示切り替え
     chrome.declarativeContent.onPageChanged.removeRules(undefined, function () {
         chrome.declarativeContent.onPageChanged.addRules([{
@@ -14,20 +12,71 @@ chrome.runtime.onInstalled.addListener(function () {
     });
 });
 
-window.onload = function () {
-    // クリック時の動作
-    chrome.pageAction.onClicked.addListener(function (tab) {
-        // キャプチャを実行
+// スクリーンショットのファイル名を作成する。
+// ダウンロードディレクトリからの相対パスを返す。
+function makeFilename() {
+    function padZero(s, n) {
+        var zeros = "";
+        for (var i = 0; i < n; ++i) {
+            zeros += "0";
+        }
+        return (zeros + s).substr(-n);
+    }
+    var now = new Date();
+    var s = "seimani-sshot/"
+    s += padZero(now.getFullYear(), 4) + "-" + padZero(now.getMonth() + 1, 2) + "-" + padZero(now.getDate(), 2) + "-" + padZero(now.getHours(), 2) + padZero(now.getMinutes(), 2) + padZero(now.getSeconds(), 2);
+    s += ".png";
+    return s;
+}
+
+// クリック時の動作
+chrome.pageAction.onClicked.addListener(function (tab) {
+    // キャプチャを実行
+    chrome.tabs.captureVisibleTab({ format: "png" }, function (screenshotUrl) {
+        // ゲーム部分の位置情報を収集
         chrome.tabs.query({ active: true, lastFocusedWindow: true }, function (tabs) {
-            var tab = tabs[0];
-            chrome.tabs.executeScript(tab.tabId, { file: "js/capture.js", allFrames: true });
+            chrome.tabs.executeScript(tabs[0].tabId, { file: "js/capture.js", allFrames: true }, function (results) {
+                var gameCanvasBounds = null;
+                var totalOffset = { left: 0, top: 0 };
+                for (var result of results) {
+                    if (result) {
+                        if (result.name == "gameCanvas") {
+                            gameCanvasBounds = result;
+                        }
+                        else {
+                            totalOffset.left += result.left;
+                            totalOffset.top += result.top;
+                        }
+                    }
+                }
+                // gameCanvas のスクリーンショット内での位置と大きさ
+                var x = gameCanvasBounds.left + totalOffset.left;
+                var y = gameCanvasBounds.top + totalOffset.top;
+                var width = gameCanvasBounds.width;
+                var height = gameCanvasBounds.height;
+
+                // 切り出し処理用の canvas を作成
+                var cropCanvas = document.createElement("canvas");
+                cropCanvas.width = width;
+                cropCanvas.height = height;
+                var context = cropCanvas.getContext("2d")
+
+                var image = document.createElement("img");
+                // イメージがロードされてから保存するために、ハンドラ内で保存処理を行う。
+                // src の設定より先にハンドラの設定をしておかないと、ハンドラの設定が間に合わない場合がある。
+                image.onload = function () {
+                    context.drawImage(image, x, y, width, height, 0, 0, width, height);
+                    var filename = makeFilename();
+                    console.log("save to \"" + filename + "\".");
+                    chrome.downloads.download({ url: cropCanvas.toDataURL(), filename: filename }, function (downloadId) {
+                        progressingDownloadIds.push(downloadId);
+                    });
+                };
+                image.src = screenshotUrl;
+            });
         });
     });
-};
-
-/*
- * キャプチャしたスクリーンショットのダウンロード(保存)関係
- */
+});
 
 // ダウンロードの監視
 var progressingDownloadIds = []
@@ -54,33 +103,3 @@ chrome.downloads.onChanged.addListener(function (downloadDelta) {
         });
     }
 });
-
-// スクリーンショットのファイル名を作成する。
-// ダウンロードディレクトリからの相対パスを返す。
-function makeFilename() {
-    function padZero(s, n) {
-        var zeros = "";
-        for (var i = 0; i < n; ++i) {
-            zeros += "0";
-        }
-        return (zeros + s).substr(-n);
-    }
-    var now = new Date();
-    var s = "seimani-sshot/"
-    s += padZero(now.getFullYear(), 4) + "-" + padZero(now.getMonth() + 1, 2) + "-" + padZero(now.getDate(), 2) + "-" + padZero(now.getHours(), 2) + padZero(now.getMinutes(), 2) + padZero(now.getSeconds(), 2);
-    s += ".png";
-    return s;
-}
-
-// キャプチャ処理から送られてきたスクリーンショットイメージを受け取る
-chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
-    // 送られてきたイメージをダウンロード
-    if (message.imageDataURL) {
-        var dataURL = message.imageDataURL;
-        var filename = makeFilename();
-        console.log("save to \"" + filename + "\".");
-        chrome.downloads.download({ url: dataURL, filename: filename }, function (downloadId) {
-            progressingDownloadIds.push(downloadId);
-        });
-    }
-})

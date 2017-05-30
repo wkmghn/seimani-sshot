@@ -2,7 +2,7 @@
   "manifest_version": 2,
   "name": "seimani-sshot",
   "description": "政剣マニフェスティアのスクリーンショットを簡単に撮影できます。",
-  "version": "1.5",
+  "version": "1.6",
   "icons": {
       "128": "images/icons/icon_128.png"
   },
@@ -24,8 +24,10 @@
   "content_scripts": [
     {
       "matches": [
-        "http://pc-play.games.dmm.com/play/seiken/*",
-        "http://d3vhzwqidpn2dk.cloudfront.net/seimani/*"
+        "http://pc-play.games.dmm.com/play/*",
+        "http://pc-play.games.dmm.com/play/seimani/*",
+        "http://d3vhzwqidpn2dk.cloudfront.net/seimani/*",
+        "http://osapi.dmm.com/gadgets/"
       ],
       "js": [
         "js/modify_cursor.js"
@@ -41,12 +43,16 @@
       }
   },
   "permissions": [
-      "tabs",
-      "downloads",
-      "declarativeContent",
-      "storage",
-      "http://pc-play.games.dmm.com/play/seiken/*",
-      "http://d3vhzwqidpn2dk.cloudfront.net/seimani/*"
+    "activeTab",
+    "tabCapture",
+    "tabs",
+    "downloads",
+    "declarativeContent",
+    "storage",
+    "http://pc-play.games.dmm.com/play/*",
+    "http://pc-play.games.dmm.com/play/seimani/*",
+    "http://d3vhzwqidpn2dk.cloudfront.net/seimani/*",
+    "http://osapi.dmm.com/gadgets/"
   ],
   "web_accessible_resources": [
     "images/cursors/cursor.png"
